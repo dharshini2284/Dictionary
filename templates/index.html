@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Lookup</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Word Lookup</h1>
+        <form method="post" action="/get_word">
+            <input type="text" name="word" placeholder="Enter a word" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% elif word %}
+        <h2>Word: {{ word }}</h2>
+        <p><strong>Phonetic:</strong> {{ phonetic_text }}</p>
+
+        {% if phonetic_audio %}
+        <audio controls>
+            <source src="{{ phonetic_audio }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        {% endif %}
+
+        <h3>Definitions:</h3>
+        <p><strong>Noun:</strong> {{ noun_definition }}</p>
+        <p><strong>Verb:</strong> {{ verb_definition }}</p>
+        <p><strong>Interjection:</strong> {{ interjection_definition }}</p>
+
+        <h3>Example Usage:</h3>
+        <p>{{ example_usage }}</p>
+
+        <h3>Synonyms:</h3>
+        <p>{{ synonyms | join(', ') }}</p>
+
+        <h3>Antonyms:</h3>
+        <p>{{ antonyms | join(', ') }}</p>
+
+        <h3>Source:</h3>
+        <p><a href="{{ source_url }}" target="_blank">{{ source_url }}</a></p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
